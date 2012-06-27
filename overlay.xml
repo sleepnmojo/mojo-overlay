@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<repositories version="1.0">
+  <repo priority="50" quality="experimental" status="unofficial">
+    <name>mojo</name>
+    <description>mojo Overlay</description>
+    <homepage>http://klaig.blogspot.com/</homepage>
+    <owner>
+      <email>christian.my.hero@gmail.com</email>
+    </owner>
+    <source type="git">git://github.com/sleepnmojo/mojo-overlay.git</source>
+  </repo>
+</repositories>

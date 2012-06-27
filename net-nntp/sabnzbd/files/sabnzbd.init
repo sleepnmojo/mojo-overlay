@@ -1,0 +1,38 @@
+#!/sbin/runscript
+# Copyright 1999-2007 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+    need net
+}
+
+start() {
+	ebegin "Starting SABnzbd"
+	if ! check_config ; then
+		eend 1
+		return 1
+	fi
+	export SABNZBD_CONFIG
+	start-stop-daemon --start --quiet --user "${SAB_USER}:${SAB_GROUP}" \
+			--pidfile "${SAB_PID}" -d "${SAB_PATH}" \
+			--exec python "${SAB_PY}" -- -d -f "${SAB_CFG}" --pid /var/run/sabnzbd/
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping SABnzbd"
+	start-stop-daemon --stop --retry 30 --pidfile "${SAB_PID}"
+	eend $?
+}
+
+check_config() {
+	if [ ! -e ${SAB_CONFIG} ] ; then
+		eerror "ERROR: can't find ${SAB_CONFIG}."
+		return 1
+	else
+		return 0
+	fi
+}
+
+#vim:set et:
