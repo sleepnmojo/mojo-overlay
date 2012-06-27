@@ -22,7 +22,7 @@ DHOMEDIR="/var/lib/${PN}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+rar unzip rss +yenc ssl"
+IUSE="+rar unzip rss +yenc ssl -cherrypy"
 
 RDEPEND="
 		>=dev-lang/python-2.7
