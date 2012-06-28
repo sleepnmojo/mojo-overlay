@@ -1,0 +1,58 @@
+diff -rupN par2cmdline-0.4-tbb-20100203-orig//Makefile.am par2cmdline-0.4-tbb-20100203/Makefile.am
+--- par2cmdline-0.4-tbb-20100203-orig//Makefile.am	2010-02-02 03:02:39.000000000 -0500
++++ par2cmdline-0.4-tbb-20100203/Makefile.am	2012-06-28 14:44:18.153650805 -0400
+@@ -111,9 +111,9 @@ par2_SOURCES = par2cmdline.cpp par2cmdli
+ 	verificationpacket.cpp verificationpacket.h \
+ 	$(ASMSOURCES) $(GPGPU_SOURCES)
+ 
+-LDADD = -lstdc++ -ltbb -L.
++LDADD = -lstdc++ -ltbb -lrt -L.
+ if PLATFORM_DARWIN
+-AM_CXXFLAGS = -Wall -I$(top_srcdir)/../tbb22_20090809oss_src/include -gfull -O3 -fvisibility=hidden -fvisibility-inlines-hidden $(CXXFLAGS_DARWIN) $(AM_CXXFLAGS_GPGPU) $(FLAGS_ARCH)
++AM_CXXFLAGS = -Wall -gfull -O3 -fvisibility=hidden -fvisibility-inlines-hidden $(CXXFLAGS_DARWIN) $(AM_CXXFLAGS_GPGPU) $(FLAGS_ARCH)
+ if AMD64
+ AM_CXXFLAGS += -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+ AM_LDFLAGS = -mmacosx-version-min=10.5
+@@ -141,7 +141,7 @@ AM_CCASFLAGS = -Wa,-I$(top_srcdir)
+ AM_LDFLAGS = -L/usr/local/lib $(AM_LDFLAGS_GPGPU)
+ endif
+ if PLATFORM_LINUX
+-AM_CXXFLAGS = -Wall -I$(top_srcdir)/../tbb22_20090809oss/include $(AM_CXXFLAGS_GPGPU) $(FLAGS_ARCH)
++AM_CXXFLAGS = -Wall $(AM_CXXFLAGS_GPGPU) $(FLAGS_ARCH)
+ AM_CCASFLAGS = -Wa,-I$(top_srcdir)
+ AM_LDFLAGS = '-Wl,-R,$$ORIGIN' $(AM_LDFLAGS_GPGPU)
+ endif
+diff -rupN par2cmdline-0.4-tbb-20100203-orig//Makefile.in par2cmdline-0.4-tbb-20100203/Makefile.in
+--- par2cmdline-0.4-tbb-20100203-orig//Makefile.in	2009-02-03 00:15:33.000000000 -0500
++++ par2cmdline-0.4-tbb-20100203/Makefile.in	2012-06-28 14:43:26.424404539 -0400
+@@ -282,16 +282,15 @@ par2_SOURCES = par2cmdline.cpp par2cmdli
+ 	verificationpacket.cpp verificationpacket.h \
+ 	$(ASMSOURCES) $(GPGPU_SOURCES)
+ 
+-LDADD = -lstdc++ -ltbb -L.
++LDADD = -lstdc++ -ltbb -lrt -L.
+ @PLATFORM_DARWIN_TRUE@AM_CXXFLAGS = -Wall \
+-@PLATFORM_DARWIN_TRUE@	-I$(top_srcdir)/../tbb21_009oss/include \
+ @PLATFORM_DARWIN_TRUE@	-gfull -O3 -fvisibility=hidden \
+ @PLATFORM_DARWIN_TRUE@	-fvisibility-inlines-hidden \
+ @PLATFORM_DARWIN_TRUE@	$(CXXFLAGS_DARWIN) $(AM_CXXFLAGS_GPGPU) \
+ @PLATFORM_DARWIN_TRUE@	$(FLAGS_ARCH) $(am__append_2) \
+ @PLATFORM_DARWIN_TRUE@	$(am__append_3)
+ @PLATFORM_FREEBSD_TRUE@AM_CXXFLAGS = -Wall -I/usr/local/include $(AM_CXXFLAGS_GPGPU) $(FLAGS_ARCH)
+-@PLATFORM_LINUX_TRUE@AM_CXXFLAGS = -Wall -I$(top_srcdir)/../tbb21_009oss/include $(AM_CXXFLAGS_GPGPU) $(FLAGS_ARCH)
++@PLATFORM_LINUX_TRUE@AM_CXXFLAGS = -Wall $(AM_CXXFLAGS_GPGPU) $(FLAGS_ARCH)
+ @GPGPU_CUDA_FALSE@@PLATFORM_DARWIN_TRUE@@X86CPU_TRUE@AM_LDFLAGS = -mmacosx-version-min=10.4
+ @GPGPU_CUDA_TRUE@@PLATFORM_DARWIN_TRUE@@X86CPU_TRUE@AM_LDFLAGS = $(AM_LDFLAGS_GPGPU)
+ @PLATFORM_DARWIN_TRUE@@PPC32_TRUE@AM_LDFLAGS = -mmacosx-version-min=10.4
+diff -rupN par2cmdline-0.4-tbb-20100203-orig//par2cmdline.h par2cmdline-0.4-tbb-20100203/par2cmdline.h
+--- par2cmdline-0.4-tbb-20100203-orig//par2cmdline.h	2009-02-03 00:14:49.000000000 -0500
++++ par2cmdline-0.4-tbb-20100203/par2cmdline.h	2012-06-28 14:42:13.245470812 -0400
+@@ -179,7 +179,7 @@ char *strchr(), *strrchr();
+ #endif
+ 
+ #if HAVE_MEMORY_H
+-#  include <memory.h>
++#  include <memory>
+ #endif
+ 
+ #if !HAVE_STRICMP
