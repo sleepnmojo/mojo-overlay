@@ -20,6 +20,8 @@ RDEPEND="dev-cpp/tbb"
 
 DOCS="AUTHORS ChangeLog README"
 
+S=${WORKDIR}/${PN}-${PV}-tbb-${MY_PR}
+
 src_prepare() {
 	epatch \
 		"${FILESDIR}"/${PN}-${PV}-tbb-compile.patch
