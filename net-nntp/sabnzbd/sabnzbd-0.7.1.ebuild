@@ -101,7 +101,7 @@ src_install() {
 	fperms -R 775 /var/log/${PN}
 
 	keepdir /var/run/${PN}
-	fowners -R root:${PN} /var/run/${PN}
+	fowners -R ${PN}:${PN} /var/run/${PN}
 	fperms -R 770 /var/run/${PN}
 
 	#Add themes & code
