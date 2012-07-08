@@ -67,7 +67,6 @@ src_install() {
 	api_key=$(get_key)
 	ewarn "Setting api key to: $api_key"
 
-
 	#Init scripts
 	newconfd "${FILESDIR}/${PN}.conf" "${PN}"
 	newinitd "${FILESDIR}/${PN}.init" "${PN}"
@@ -78,8 +77,8 @@ src_install() {
 	sed -e "s/%API_KEY%/$api_key/g" -i "${PN}.ini"
 	insinto /etc/${PN}
 	newins "${PN}.ini" "${PN}.conf"
-	fowners -R root:${PN} /etc/${PN}
-	fperms -R 660 /etc/${PN}
+	fowners -R ${PN}:${PN} /etc/${PN}
+	fperms -R ug=rwX /etc/${PN}
 	fperms 660 /etc/conf.d/${PN}
 
   if use logrotate; then
@@ -138,5 +137,5 @@ pkg_postinst() {
 	ewarn "When upgrading ${PN}, don't forget to fix the permissions"
 	ewarn "on the config file after merging the changes."
 	ewarn ""
-	ewarn "chown -cvR root:${PN} /etc/${PN} && chmod -cvR 660 /etc/${PN}"
+	ewarn "chown -cvR ${PN}:${PN} /etc/${PN} && chmod -cvR 660 /etc/${PN}"
 }

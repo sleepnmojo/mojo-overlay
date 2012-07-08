@@ -1,10 +1,8 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
-
+EAPI="3"
 inherit eutils multilib python
-
-EAPI="1"
 
 MY_P="$P"
 MY_P="${MY_P/sab/SAB}"
