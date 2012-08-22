@@ -1,0 +1,24 @@
+#!/sbin/runscript
+# Copyright 1999-2007 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+    need net sabnzbd
+}
+
+start() {
+	ebegin "Starting CouchPotato"
+	start-stop-daemon --start --quiet --user "${SAB_USER}:${SAB_GROUP}" \
+			--chdir "${COUCH_PATH}" \
+			--exec python "${COUCH_PY}" -- --daemon --config_file "${COUCH_CFG}" --data_dir "${COUCH_DATA}" --pid_file "${COUCH_PID}"
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping CouchPotato"
+	start-stop-daemon --stop --retry 30 --pidfile "${COUCH_PID}"
+	eend $?
+}
+
+#vim:set et:
