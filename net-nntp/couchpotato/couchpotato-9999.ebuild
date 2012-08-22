@@ -60,25 +60,23 @@ src_install() {
 	fowners -R sabnzbd:sabnzbd /etc/sabnzbd
 	fperms -R ug=rwX /etc/sabnzbd
 
-  if use logrotate; then
-    # Rotation of logfile
-    insinto /etc/logrotate.d
-    newins "${FILESDIR}/${PN}.logrotate" ${PN}
-  fi
+	if use logrotate; then
+		# Rotation of logfile
+		insinto /etc/logrotate.d
+		newins "${FILESDIR}/${PN}.logrotate" ${PN}
+	fi
 
-	keepdir /var/log/${PN}
-    fowners -R sabnzbd:sabnzbd /var/log/${PN}
-	fperms -R =rX,ug+w /var/log/${PN}
+	for c_dir in log cache ; do
+		keepdir /var/${c_dir}/${PN}
+	    fowners -R sabnzbd:sabnzbd /var/${c_dir}/${PN}
+		fperms -R =rX,ug+w /var/${c_dir}/${PN}
+	done
 
 	#Create all default dirs
 	keepdir ${DHOMEDIR}
-
-	for i in db_backup cache;do
-		keepdir ${DHOMEDIR}/${i}
-	done
-
-	insinto ${DHOMEDIR}
 	dosym /var/log/${PN} ${DHOMEDIR}/logs
+	dosym /var/cache/${PN} ${DHOMEDIR}/cache
+	keepdir ${DHOMEDIR}/db_backup
 
 	fowners -R sabnzbd:sabnzbd ${DHOMEDIR}
 	fperms -R =rX,ug+w ${DHOMEDIR}
@@ -102,7 +100,6 @@ pkg_postinst() {
 	python_mod_optimize "/usr/share/${PN}"
 
 	einfo "Default directory: ${HOMEDIR}"
-	einfo "Templates can be found in: ${ROOT}usr/lib/${PN}"
 	einfo ""
 	einfo "Run: gpasswd -a <user> sabnzbd"
 	einfo "to add an user to the sabnzbd group so it can edit sabnzbd files"
@@ -110,7 +107,6 @@ pkg_postinst() {
 	ewarn "Please configure /etc/conf.d/${PN} before starting!"
 	einfo ""
 	einfo "Start with ${ROOT}etc/init.d/${PN} start"
-	einfo "Default web credentials : sabnzbd/secret"
 	einfo ""
 	ewarn "When upgrading ${PN}, don't forget to fix the permissions"
 	ewarn "on the config file after merging the changes."
