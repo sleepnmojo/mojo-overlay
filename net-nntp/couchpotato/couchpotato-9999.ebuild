@@ -78,7 +78,7 @@ src_install() {
 	done
 
 	insinto ${DHOMEDIR}
-	dosym logs /var/log/${PN}
+	dosym /var/log/${PN} ${DHOMEDIR}/logs
 
 	fowners -R sabnzbd:sabnzbd ${DHOMEDIR}
 	fperms -R =rX,ug+w ${DHOMEDIR}
