@@ -66,10 +66,10 @@ src_install() {
 		newins "${FILESDIR}/${PN}.logrotate" ${PN}
 	fi
 
-	for c_dir in log cache ; do
-		keepdir /var/${c_dir}/${PN}
-	    fowners -R sabnzbd:sabnzbd /var/${c_dir}/${PN}
-		fperms -R =rX,ug+w /var/${c_dir}/${PN}
+	for i in log cache ; do
+		keepdir /var/${i}/${PN}
+	    fowners -R sabnzbd:sabnzbd /var/${i}/${PN}
+		fperms -R =rX,ug+w /var/${i}/${PN}
 	done
 
 	#Create all default dirs
