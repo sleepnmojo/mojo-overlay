@@ -80,7 +80,6 @@ src_install() {
 	newins "${PN}.ini" "${PN}.conf"
 	fowners -R ${PN}:${PN} /etc/${PN}
 	fperms -R ug=rwX /etc/${PN}
-	fperms 660 /etc/conf.d/${PN}
 
   if use logrotate; then
     # Rotation of logfile
@@ -95,15 +94,15 @@ src_install() {
 		keepdir ${DHOMEDIR}/${i}
 	done
 	fowners -R ${PN}:${PN} ${DHOMEDIR}
-	fperms -R 775 ${DHOMEDIR}
+	fperms -R =rX,ug+w ${DHOMEDIR}
 
 	keepdir /var/log/${PN}
 	fowners -R ${PN}:${PN} /var/log/${PN}
-	fperms -R 775 /var/log/${PN}
+	fperms -R =rX,ug+w /var/log/${PN}
 
 	keepdir /var/run/${PN}
 	fowners -R ${PN}:${PN} /var/run/${PN}
-	fperms -R 770 /var/run/${PN}
+	fperms -R ug=rwX /var/run/${PN}
 
 	#Add themes & code
 	dodir /usr/share/${PN}
@@ -115,8 +114,8 @@ src_install() {
 	doins SABnzbd.py || die "installing SABnzbd.py"
 
 	#fix permissions
-	fowners -R root:${PN} /usr/share/${PN}
-	fperms -R 775 /usr/share/${PN}
+	fowners -R ${PN}:${PN} /usr/share/${PN}
+	fperms -R =rX,ug+w /usr/share/${PN}
 }
 
 pkg_postinst() {
