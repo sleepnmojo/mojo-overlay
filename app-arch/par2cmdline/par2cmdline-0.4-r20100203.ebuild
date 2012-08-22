@@ -3,7 +3,7 @@
 # $Header$
 
 EAPI=4
-inherit eutils
+inherit eutils autotools
 
 MY_PR="${PR/r/}"
 
@@ -25,6 +25,8 @@ S=${WORKDIR}/${PN}-${PV}-tbb-${MY_PR}
 src_prepare() {
 	epatch \
 		"${FILESDIR}"/${PN}-${PV}-tbb-compile.patch
+	
+	eautoreconf
 }
 
 src_install() {
