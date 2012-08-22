@@ -81,11 +81,11 @@ src_install() {
 	fowners -R ${PN}:${PN} /etc/${PN}
 	fperms -R ug=rwX /etc/${PN}
 
-  if use logrotate; then
-    # Rotation of logfile
-    insinto /etc/logrotate.d
-    newins "${FILESDIR}/${PN}.logrotate" ${PN}
-  fi
+	if use logrotate; then
+		# Rotation of logfile
+		insinto /etc/logrotate.d
+		newins "${FILESDIR}/${PN}.logrotate" ${PN}
+	fi
 
 	#Create all default dirs
 	keepdir ${DHOMEDIR}
@@ -96,13 +96,11 @@ src_install() {
 	fowners -R ${PN}:${PN} ${DHOMEDIR}
 	fperms -R =rX,ug+w ${DHOMEDIR}
 
-	keepdir /var/log/${PN}
-	fowners -R ${PN}:${PN} /var/log/${PN}
-	fperms -R =rX,ug+w /var/log/${PN}
-
-	keepdir /var/run/${PN}
-	fowners -R ${PN}:${PN} /var/run/${PN}
-	fperms -R ug=rwX /var/run/${PN}
+	for i in log cache run ;do
+		keepdir /var/${i}/${PN}
+		fowners -R ${PN}:${PN} /var/${i}/${PN}
+		fperms -R =rX,ug+w /var/${i}/${PN}
+	done
 
 	#Add themes & code
 	dodir /usr/share/${PN}
@@ -124,7 +122,6 @@ pkg_postinst() {
 	python_mod_optimize "/usr/share/${PN}"
 
 	einfo "Default directory: ${HOMEDIR}"
-	einfo "Templates can be found in: ${ROOT}usr/lib/${PN}"
 	einfo ""
 	einfo "Run: gpasswd -a <user> ${PN}"
 	einfo "to add an user to the sabnzbd group so it can edit sabnzbd files"
