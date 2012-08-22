@@ -66,22 +66,22 @@ src_install() {
     newins "${FILESDIR}/${PN}.logrotate" ${PN}
   fi
 
+	keepdir /var/log/${PN}
+    fowners -R sabnzbd:sabnzbd /var/log/${PN}
+	fperms -R =rX,ug+w /var/log/${PN}
+
 	#Create all default dirs
 	keepdir ${DHOMEDIR}
-	insinto ${DHOMEDIR}
 
 	for i in db_backup cache;do
 		keepdir ${DHOMEDIR}/${i}
 	done
+
+	insinto ${DHOMEDIR}
+	dosym logs /var/log/${PN}
+
 	fowners -R sabnzbd:sabnzbd ${DHOMEDIR}
 	fperms -R =rX,ug+w ${DHOMEDIR}
-
-	keepdir /var/log/${PN}
-	fowners -R sabnzbd:sabnzbd /var/log/${PN}
-	fperms -R =rX,ug+w /var/log/${PN}
-
-    dosym logs /var/log/${PN}
-
 
 	#Add themes & code
 	dodir /usr/share/${PN}
@@ -104,7 +104,7 @@ pkg_postinst() {
 	einfo "Default directory: ${HOMEDIR}"
 	einfo "Templates can be found in: ${ROOT}usr/lib/${PN}"
 	einfo ""
-	einfo "Run: gpasswd -a <user> ${PN}"
+	einfo "Run: gpasswd -a <user> sabnzbd"
 	einfo "to add an user to the sabnzbd group so it can edit sabnzbd files"
 	einfo ""
 	ewarn "Please configure /etc/conf.d/${PN} before starting!"
@@ -115,5 +115,5 @@ pkg_postinst() {
 	ewarn "When upgrading ${PN}, don't forget to fix the permissions"
 	ewarn "on the config file after merging the changes."
 	ewarn ""
-	ewarn "chown -cvR ${PN}:${PN} /etc/${PN} && chmod -cvR 660 /etc/${PN}"
+	ewarn "chown -cvR sabnzbd:sabnzbd /etc/sabnzbd && chmod -cvR 660 /etc/sabnzbd"
 }
