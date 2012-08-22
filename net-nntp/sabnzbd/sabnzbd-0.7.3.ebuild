@@ -105,8 +105,8 @@ src_install() {
 	fperms -R 770 /var/run/${PN}
 
 	#Add themes & code
-	dodir /usr/lib/${PN}
-	insinto /usr/lib/${PN}
+	dodir /usr/share/${PN}
+	insinto /usr/share/${PN}
 	for sab_dir in email gntp interfaces ${PN} locale util ; do
 		doins -r ${sab_dir} || die "failed to install ${sab_dir}"
 	done
@@ -114,14 +114,14 @@ src_install() {
 	doins SABnzbd.py || die "installing SABnzbd.py"
 
 	#fix permissions
-	fowners -R root:${PN} /usr/lib/${PN}
-	fperms -R 775 /usr/lib/${PN}
+	fowners -R root:${PN} /usr/share/${PN}
+	fperms -R 775 /usr/share/${PN}
 }
 
 pkg_postinst() {
 
 	# optimizing
-	python_mod_optimize "/usr/lib/${PN}"
+	python_mod_optimize "/usr/share/${PN}"
 
 	einfo "Default directory: ${HOMEDIR}"
 	einfo "Templates can be found in: ${ROOT}usr/lib/${PN}"
