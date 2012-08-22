@@ -3,7 +3,7 @@
 # $Header$
 
 EAPI=4
-inherit eutils autotools
+inherit eutils autotools flag-o-matic
 
 MY_PR="${PR/r/}"
 
@@ -23,6 +23,7 @@ DOCS="AUTHORS ChangeLog README"
 S=${WORKDIR}/${PN}-${PV}-tbb-${MY_PR}
 
 src_prepare() {
+	append-flags -Wa,--noexecstack
 	epatch \
 		"${FILESDIR}"/${PN}-${PV}-tbb-compile.patch
 	
