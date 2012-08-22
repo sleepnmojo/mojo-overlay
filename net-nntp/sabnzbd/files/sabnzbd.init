@@ -10,7 +10,7 @@ depend() {
 start() {
 	ebegin "Starting SABnzbd"
 	start-stop-daemon --start --quiet --user "${SAB_USER}:${SAB_GROUP}" \
-			--pidfile "${SAB_PID}" --make-pidfile --chdir "${SAB_PATH}" \
+			--pidfile "${SAB_PID}" --chdir "${SAB_PATH}" \
 			--exec python "${SAB_PY}" -- -d -f "${SAB_CFG}" --pid /var/run/sabnzbd/
 	eend $?
 }
