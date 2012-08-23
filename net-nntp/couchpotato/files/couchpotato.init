@@ -10,7 +10,7 @@ depend() {
 start() {
 	ebegin "Starting CouchPotato"
 	start-stop-daemon --start --quiet --user "${SAB_USER}:${SAB_GROUP}" \
-			--chdir "${COUCH_PATH}" \
+			--pidfile "${COUCH_PID}" --chdir "${COUCH_PATH}" \
 			--exec python "${COUCH_PY}" -- --daemon --config_file "${COUCH_CFG}" --data_dir "${COUCH_DATA}" --pid_file "${COUCH_PID}"
 	eend $?
 }
