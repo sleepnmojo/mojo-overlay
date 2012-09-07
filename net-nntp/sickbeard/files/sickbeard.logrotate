@@ -1,0 +1,4 @@
+/var/log/sickbeard/*.log{
+	missingok
+	su sabnzbd sabnzbd
+}
