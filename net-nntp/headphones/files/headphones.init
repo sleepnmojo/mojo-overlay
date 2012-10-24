@@ -1,0 +1,24 @@
+#!/sbin/runscript
+# Copyright 1999-2007 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+    need net sabnzbd
+}
+
+start() {
+	ebegin "Starting Headphones"
+	start-stop-daemon --start --quiet --user "${SAB_USER}:${SAB_GROUP}" \
+			--pidfile "${H_PID}" --chdir "${H_PATH}" \
+			--exec python "${H_PY}" -- --daemon --config "${H_CFG}" --datadir "${H_DATA}" --pidfile "${H_PID}" --port ${H_PORT} --nolaunch
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping Headphones"
+	start-stop-daemon --stop --retry 30 --pidfile "${H_PID}"
+	eend $?
+}
+
+#vim:set et:

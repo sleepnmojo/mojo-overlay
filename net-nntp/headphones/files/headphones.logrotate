@@ -1,0 +1,4 @@
+/var/log/headphones/*.log{
+	missingok
+	su sabnzbd sabnzbd
+}
