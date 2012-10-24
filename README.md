@@ -18,7 +18,8 @@ Install the overlay, and sync.
 
 ```bash
 layman -o https://raw.github.com/sleepnmojo/mojo-overlay/master/overlay.xml -a mojo
-layman -S```
+layman -S
+```
 
 ##Install packages
 
@@ -30,6 +31,7 @@ net-nntp/couchpotato ~amd64
 net-nntp/sickbeard ~amd64
 net-nntp/headphones ~amd64
 dev-python/yenc ~amd64
-app-arch/par2cmdline ~amd64```
+app-arch/par2cmdline ~amd64
+```
 
 Then emerge the packages needed.
