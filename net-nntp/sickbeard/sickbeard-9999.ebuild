@@ -25,8 +25,7 @@ RDEPEND="
 		rss? ( dev-python/feedparser )
 		ssl? ( dev-python/pyopenssl )"
 DEPEND="${RDEPEND}
-		net-nntp/sabnzbd
-		logrotate? ( app-admin/logrotate )"
+		net-nntp/sabnzbd"
 
 DOCS=( "COPYING.txt" "readme.md" )
 
@@ -55,12 +54,6 @@ src_install() {
 	newins "${PN}.ini" "${PN}.conf"
 	fowners -R sabnzbd:sabnzbd /etc/sabnzbd
 	fperms -R ug=rwX /etc/sabnzbd
-
-	if use logrotate; then
-		# Rotation of logfile
-		insinto /etc/logrotate.d
-		newins "${FILESDIR}/${PN}.logrotate" ${PN}
-	fi
 
 	for i in log cache ; do
 		keepdir /var/${i}/${PN}
