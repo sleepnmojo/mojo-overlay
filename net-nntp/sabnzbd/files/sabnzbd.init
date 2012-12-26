@@ -7,7 +7,17 @@ depend() {
     need net
 }
 
+mkdir_sabdirs() {
+        if [ -d /var/run/sabnzbd ];
+        then
+                mkdir -p /var/run/sabnzbd
+                chown -R ${SAB_USER}:${SAB_GROUP} /var/run/sabnzbd
+                chmod -R =rX,ug+w /var/run/sabnzbd
+        fi
+}
+
 start() {
+        mkdir_sabdirs
 	ebegin "Starting SABnzbd"
 	start-stop-daemon --start --quiet --user "${SAB_USER}:${SAB_GROUP}" \
 			--pidfile "${SAB_PID}" --chdir "${SAB_PATH}" \
