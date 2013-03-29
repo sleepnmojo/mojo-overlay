@@ -8,7 +8,7 @@ depend() {
 }
 
 mkdir_sabdirs() {
-        if [ -d /var/run/sabnzbd ];
+        if [ ! -d /var/run/sabnzbd ];
         then
                 mkdir -p /var/run/sabnzbd
                 chown -R ${SAB_USER}:${SAB_GROUP} /var/run/sabnzbd
