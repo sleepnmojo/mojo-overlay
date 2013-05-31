@@ -1,4 +1,0 @@
-/var/log/couchpotato/*.log{
-	missingok
-	su sabnzbd sabnzbd
-}

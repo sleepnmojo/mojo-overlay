@@ -21,7 +21,7 @@ DHOMEDIR="/var/lib/${PN}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="rss ssl logrotate "
+IUSE="rss ssl "
 
 RDEPEND="
 		>=dev-lang/python-2.7
@@ -29,8 +29,7 @@ RDEPEND="
 		rss? ( dev-python/feedparser )
 		ssl? ( dev-python/pyopenssl )"
 DEPEND="${RDEPEND}
-		net-nntp/sabnzbd
-		logrotate? ( app-admin/logrotate )"
+		net-nntp/sabnzbd"
 
 DOCS=( "license.txt" "README.md" )
 
@@ -59,12 +58,6 @@ src_install() {
 	newins "${PN}.ini" "${PN}.conf"
 	fowners -R sabnzbd:sabnzbd /etc/sabnzbd
 	fperms -R ug=rwX /etc/sabnzbd
-
-	if use logrotate; then
-		# Rotation of logfile
-		insinto /etc/logrotate.d
-		newins "${FILESDIR}/${PN}.logrotate" ${PN}
-	fi
 
 	for i in log cache ; do
 		keepdir /var/${i}/${PN}
