@@ -20,19 +20,17 @@ DHOMEDIR="/var/lib/${PN}"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="+rar unzip rss +yenc ssl logrotate -cherrypy"
+KEYWORDS="~amd64"
+IUSE="+rar unzip +yenc ssl logrotate"
 
 RDEPEND="
 		>=dev-lang/python-2.7
 		>=dev-python/pysqlite-2.3
 		>=dev-python/celementtree-1.0.5
-		cherrypy? ( >=dev-python/cherrypy-3.2.0 )
 		>=dev-python/cheetah-2.0.1
 		>=app-arch/par2cmdline-0.4
-		rar? ( app-arch/unrar )
+		rar? ( || ( app-arch/unrar app-arch/rar ) )
 		unzip? ( app-arch/unzip )
-		rss? ( dev-python/feedparser )
 		yenc? ( >=dev-python/yenc-0.3 )
 		ssl? ( dev-python/pyopenssl )"
 DEPEND="${RDEPEND}
@@ -40,14 +38,15 @@ DEPEND="${RDEPEND}
 		logrotate? ( app-admin/logrotate )"
 
 S="${WORKDIR}/${MY_P}"
-DOCS=( "CHANGELOG.txt" "ISSUES.txt" "INSTALL.txt" "README.txt" "Sample-PostProc.sh" )
+DOCS=( "CHANGELOG.txt" "ISSUES.txt" "INSTALL.txt" "README.txt"
+"Sample-PostProc.sh" "licences/*" )
 
 pkg_setup() {
 	#Create group and user
 	enewgroup "${PN}"
 	enewuser "${PN}" -1 -1 "${HOMEDIR}" "${PN}"
 
-  python_set_active_version 2
+	python_set_active_version 2
 }
 
 get_key() {
@@ -57,11 +56,6 @@ get_key() {
 	mypy="$mypy from random import Random;"
 	mypy="$mypy print ''.join(Random().sample(string.letters+string.digits, $len));"
 	python -c "$mypy"
-}
-
-src_prepare() {
-	# Fix SSL support with latest CherryPy releases (deprecation warning in 3.2.0, broken in 3.2.1)
-	use cherrypy && epatch "${FILESDIR}/${PN}-0.6.9-cherrypy-3.2.1-compat.patch"
 }
 
 src_install() {
@@ -105,10 +99,9 @@ src_install() {
 	#Add themes & code
 	dodir /usr/share/${PN}
 	insinto /usr/share/${PN}
-	for sab_dir in email gntp interfaces ${PN} locale util ; do
+	for sab_dir in cherrypy email gntp icons interfaces ${PN} locale tools util ; do
 		doins -r ${sab_dir} || die "failed to install ${sab_dir}"
 	done
-	use cherrypy || doins -r cherrypy || die "failed to install cherrypy"
 	doins SABnzbd.py || die "installing SABnzbd.py"
 
 	#fix permissions
