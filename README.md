@@ -32,6 +32,7 @@ net-nntp/sickbeard ~amd64
 net-nntp/headphones ~amd64
 dev-python/yenc ~amd64
 app-arch/par2cmdline ~amd64
+www-apps/maraschino ~amd64
 ```
 
 Then emerge the packages needed.
