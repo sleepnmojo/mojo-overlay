@@ -1,0 +1,4 @@
+/var/log/maraschino/*.log{
+	missingok
+	su maraschino maraschino
+}

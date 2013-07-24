@@ -1,0 +1,34 @@
+#!/sbin/runscript
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+    need net
+}
+
+check_config() {
+  if [ ! -d /var/run/maraschino ];
+  then
+          mkdir -p /var/run/maraschino
+          chown -R ${MA_USER}:${MA_GROUP} /var/run/maraschino
+          chmod -R =rX,ug+w /var/run/maraschino
+  fi
+}
+
+start() {
+  check_config
+	ebegin "Starting Maraschino"
+	start-stop-daemon --start --quiet --user "${MA_USER}:${MA_GROUP}" \
+			--pidfile "${MA_PID}" --chdir "${MA_PATH}" \
+			--exec python "${MA_PY}" --ionice 2:4 --nice 15 \
+			-- --daemon --datadir "${MA_DATA}" --pidfile "${MA_PID}" --port ${MA_PORT}
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping Maraschino"
+	start-stop-daemon --stop --retry 30 --pidfile "${MA_PID}"
+	eend $?
+}
+
+#vim:set et:
