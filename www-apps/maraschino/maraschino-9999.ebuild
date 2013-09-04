@@ -26,11 +26,11 @@ DEPEND="${RDEPEND}
 		logrotate? ( app-admin/logrotate )"
 
 pkg_setup() {
-       #Create group and user
-       enewgroup "${PN}"
-       enewuser "${PN}" -1 -1 "${HOMEDIR}" "${PN}"
+    	#Create group and user
+    	enewgroup "${PN}"
+    	enewuser "${PN}" -1 -1 "${HOMEDIR}" "${PN}"
 
-       python_set_active_version 2
+    	python_set_active_version 2
 }
 
 src_install() {
@@ -43,7 +43,7 @@ src_install() {
 		fowners -R maraschino:maraschino /var/${i}/${PN}
 		fperms -R =rX,ug+w /var/${i}/${PN}
 	done
-	
+
 	if use logrotate; then
 		# Rotation of logfile
 		insinto /etc/logrotate.d
