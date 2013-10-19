@@ -3,7 +3,7 @@
 # $Header: $
 EAPI="3"
 PYTHON_DEPEND="2:2.7"
-inherit eutils multilib python git
+inherit eutils multilib python git-2
 
 DESCRIPTION="Automatic music downloader for SABnzbd"
 HOMEPAGE="http://headphones.codeshy.com/forum/"
