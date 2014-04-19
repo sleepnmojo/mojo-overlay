@@ -24,9 +24,8 @@ S=${WORKDIR}/${PN}-${PV}-tbb-${MY_PR}
 
 src_prepare() {
 	append-flags -Wa,--noexecstack
-	epatch \
-		"${FILESDIR}"/${PN}-${PV}-tbb-compile.patch
-	
+	EPATCH_SOURCE="${FILESDIR}" EPATCH_SUFFIX="patch" EPATCH_FORCE="yes" epatch
+
 	eautoreconf
 }
 
