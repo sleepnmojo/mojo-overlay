@@ -20,7 +20,6 @@ IUSE="rss ssl logrotate -cherrypy"
 
 RDEPEND="
 		>=dev-lang/python-2.7
-		>=dev-python/pysqlite-2.3
 		dev-python/cheetah
 		rss? ( dev-python/feedparser )
 		ssl? ( dev-python/pyopenssl )"

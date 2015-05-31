@@ -25,7 +25,6 @@ IUSE="rss ssl "
 
 RDEPEND="
 		>=dev-lang/python-2.7
-		>=dev-python/pysqlite-2.3
 		rss? ( dev-python/feedparser )
 		ssl? ( dev-python/pyopenssl )"
 DEPEND="${RDEPEND}

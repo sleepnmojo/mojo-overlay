@@ -20,8 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="logrotate"
 
 RDEPEND="
-		>=dev-lang/python-2.7
-		>=dev-python/pysqlite-2.3"
+		>=dev-lang/python-2.7"
 DEPEND="${RDEPEND}
 		logrotate? ( app-admin/logrotate )"
 
