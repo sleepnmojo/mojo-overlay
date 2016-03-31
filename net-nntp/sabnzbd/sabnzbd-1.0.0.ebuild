@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 EAPI="3"
@@ -25,7 +25,6 @@ IUSE="+rar unzip +yenc ssl logrotate"
 
 RDEPEND="
 		>=dev-lang/python-2.7
-		>=dev-python/pysqlite-2.3
 		>=dev-python/celementtree-1.0.5
 		>=dev-python/cheetah-2.0.1
 		>=app-arch/par2cmdline-0.4
