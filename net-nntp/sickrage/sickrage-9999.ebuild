@@ -6,10 +6,10 @@ PYTHON_DEPEND="2:2.7"
 inherit eutils multilib python git-2
 
 DESCRIPTION="Video File Manager for TV Shows, It watches for new episodes of your favorite shows and when they are posted it does its magic."
-HOMEPAGE="http://www.sickrage.tv/"
+HOMEPAGE="https://sickrage.github.io/"
 SRC_URI=""
 
-EGIT_REPO_URI="git://github.com/SiCKRAGETV/SickRage.git"
+EGIT_REPO_URI="git://github.com/SickRage/SickRage.git"
 
 HOMEDIR="${ROOT}var/lib/${PN}"
 
@@ -69,7 +69,7 @@ src_install() {
 	#Add themes & code
 	dodir /usr/share/${PN}
 	insinto /usr/share/${PN}
-	for sick_dir in ${PN} data lib cherrypy autoProcessTV tests ; do
+	for sick_dir in ${PN} sickbeard lib locale gui contrib tests ; do
 		doins -r ${sick_dir} || die "failed to install ${sick_dir}"
 	done
 	doins SickBeard.py || die "installing SickBeard.py"
