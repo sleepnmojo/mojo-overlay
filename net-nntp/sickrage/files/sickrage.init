@@ -1,0 +1,24 @@
+#!/sbin/runscript
+# Copyright 1999-2016 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+    need net sabnzbd
+}
+
+start() {
+	ebegin "Starting SickRage"
+	start-stop-daemon --start --quiet --user "${SAB_USER}:${SAB_GROUP}" \
+			--pidfile "${SR_PID}" --chdir "${SR_PATH}" \
+			--exec python "${SR_PY}" -- --daemon --config "${SR_CFG}" --datadir "${SR_DATA}" --pidfile "${SR_PID}" --port ${SR_PORT} --nolaunch
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping SickRage"
+	start-stop-daemon --stop --retry 30 --pidfile "${SR_PID}"
+	eend $?
+}
+
+#vim:set et:
