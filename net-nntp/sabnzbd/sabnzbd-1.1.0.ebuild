@@ -13,8 +13,7 @@ MY_P="${MY_P/_rc/RC}"
 
 DESCRIPTION="Binary Newsgrabber written in Python, server-oriented using a web-interface.The active successor of the abandoned SABnzbd project."
 HOMEPAGE="http://www.sabnzbd.org/"
-SRC_URI="mirror://sourceforge/sabnzbdplus/${MY_P}-src.tar.gz"
-
+SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/${MY_P}-src.tar.gz"
 HOMEDIR="${ROOT}var/lib/${PN}"
 DHOMEDIR="/var/lib/${PN}"
 
